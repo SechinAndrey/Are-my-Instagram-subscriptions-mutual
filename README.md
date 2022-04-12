@@ -1,15 +1,15 @@
-# <img src="public/icons/icon_48.png" width="45" align="left"> Are Subscriptions Mutualare Subscript Mv 3ions Mutual
+# <img src="public/icons/icon_48.png" width="45" align="left"> Are my Instagram subscriptions sutual?
 
-My Chrome Extension
+Detect if your Instagram subscriptions are mutual.
 
-## Features
+## Features 
+TODO: add description
 
-- Feature 1
-- Feature 2
-
-## Install
-
+## Install 
+TODO: add link to extention
+<!---
 [**Chrome** extension]()
+-->
 
 ## Contribution
 

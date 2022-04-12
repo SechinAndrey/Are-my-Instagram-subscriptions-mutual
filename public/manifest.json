@@ -1,22 +1,20 @@
 {
-  "manifest_version": 2,
-  "name": "Are Subscriptions Mutualare Subscript Mv 3ions Mutual",
+  "manifest_version": 3,
+  "name": "Are my Instagram subscriptions sutual?",
   "version": "0.1.0",
-  "description": "My Chrome Extension",
+  "description": "Detect if your Instagram subscriptions are mutual.",
   "icons": {
-    "16": "icons/icon_16.png",
-    "32": "icons/icon_32.png",
-    "48": "icons/icon_48.png",
-    "128": "icons/icon_128.png"
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png"
   },
   "background": {
-    "scripts": [
-      "background.js"
-    ],
-    "persistent": false
+    "service_worker": "service_worker.js"
   },
-  "browser_action": {
-    "default_title": "Are Subscriptions Mutualare Subscript Mv 3ions Mutual",
+  "action": {
+    "default_title": "Are my Instagram subscriptions sutual?",
     "default_popup": "popup.html"
   },
   "permissions": [
@@ -25,7 +23,7 @@
   "content_scripts": [
     {
       "matches": [
-        "<all_urls>"
+        "https://www.instagram.com/*"
       ],
       "run_at": "document_idle",
       "js": [
