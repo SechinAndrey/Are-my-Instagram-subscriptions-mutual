@@ -10,16 +10,20 @@
     "64": "icons/64.png",
     "128": "icons/128.png"
   },
-  "background": {
-    "service_worker": "service_worker.js"
-  },
   "action": {
     "default_title": "Are my Instagram subscriptions sutual?",
     "default_popup": "popup.html"
   },
   "permissions": [
-    "storage"
+    "storage",
+    "tabs"
   ],
+  "host_permissions": [
+    "https://www.instagram.com/*"
+  ],
+  "background": {
+    "service_worker": "service_worker.js"
+  },
   "content_scripts": [
     {
       "matches": [
@@ -28,7 +32,8 @@
       "run_at": "document_idle",
       "js": [
         "contentScript.js"
-      ]
+      ],
+      "css" : ["contentScript.css"]
     }
   ]
 }

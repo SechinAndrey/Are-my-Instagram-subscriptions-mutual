@@ -1,3 +1,3 @@
 'use strict';
 
-console.log('Log from service_worker script');
+console.log('SERVICE WORKER SCRIPT');

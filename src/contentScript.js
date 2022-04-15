@@ -1,3 +1,8 @@
 'use strict';
 
-console.log('Log from content script');
+console.log("CONTENT SCRIPT");
+
+import "./core/pageStyle.css"
+import AppManager  from './core/AppManager'
+
+new AppManager();
