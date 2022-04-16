@@ -1,5 +1,12 @@
 import {getOffset} from '../common/helpers'
 
+let defaultPositionInterval = {
+  id: null,
+  perfomedIteration: 0,
+  maxIteration: 100,
+  msInterval: 100
+}
+
 export default class CheckMutualBtn {
   constructor(){
     // element to positionate CheckMutualBtn
@@ -11,11 +18,9 @@ export default class CheckMutualBtn {
     this.topCorrection = 5;
     this.leftCorrection = 10;
 
-    this.positionInterval = {
-      id: null,
-      perfomedIteration: 0,
-      maxIteration: 50
-    }
+    this.positionInterval = {...defaultPositionInterval};
+
+    this.isActivitiesOpen = false;
 
     this.init();
   }
@@ -27,19 +32,23 @@ export default class CheckMutualBtn {
     
     // processing btn position
     window.addEventListener('resize', this.setPosition.bind(this));
-    window.onload = () => { this.setPosition()}
+    window.onload = () => { this.setPositionWithInterval()}
     this.initMutationObserver();
     this.setPosition();
   }
 
   initMutationObserver(){
+    // detect url change
     let lastUrl = location.href;
-    new MutationObserver(() => {
+    new MutationObserver((mutations) => {
       const url = location.href;
       if (url !== lastUrl) {
         this.onUrlChange(url, lastUrl);
         lastUrl = url;
       }
+
+      this.processActivityModalCovering(mutations);
+
     }).observe(document.body, {subtree: true, childList: true});
   }
 
@@ -64,11 +73,7 @@ export default class CheckMutualBtn {
 
   clearPositionInterval(){
     clearInterval(this.positionInterval.id);
-    this.positionInterval = {
-      id: null,
-      perfomedIteration: 0,
-      maxIteration: 50
-    }
+    this.positionInterval = {...defaultPositionInterval};
   }
 
   setPositionWithInterval(){
@@ -77,7 +82,6 @@ export default class CheckMutualBtn {
     }
     
     this.positionInterval.id = setInterval(() => {
-      console.log('setPositionWithInterval');
       let ancorPosition;
       let anchorEl = document.querySelector(this.anchorSelector);
 
@@ -99,6 +103,16 @@ export default class CheckMutualBtn {
       if(this.positionInterval.perfomedIteration >= this.positionInterval.maxIteration){
         this.clearPositionInterval();
       }
-    }, 200);
+    }, this.positionInterval.msInterval);
+  }
+
+  processActivityModalCovering(mutations){
+    mutations.forEach(m => {
+      if(m.target.classList.toString().includes('_0ZPOP kIKUG') && 
+      m.addedNodes[0] && m.addedNodes[0].classList.toString().includes('_8-yf5')){
+        this.isActivitiesOpen = !this.isActivitiesOpen;   
+        this.el.style.zIndex = this.isActivitiesOpen ? 0 : 1;
+      }
+    });
   }
 }
