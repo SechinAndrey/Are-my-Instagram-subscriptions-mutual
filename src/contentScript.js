@@ -5,4 +5,10 @@ console.log("CONTENT SCRIPT");
 import "./core/pageStyle.css"
 import AppManager  from './core/AppManager'
 
-new AppManager();
+let appManager = new AppManager();
+
+window.onload = () => { 
+  document.querySelector('#CheckMutualBtn').addEventListener('click', () => {
+    appManager.process();
+  })
+}
