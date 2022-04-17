@@ -24,15 +24,21 @@ export default class AppManager{
     this.checkMutualProcceror = new CheckMutualProcceror();
   }
 
-  process(){
+  async process(){
     let followedCount = this.checkMutualProcceror.scanFollowedCount();
     let followersCount = this.checkMutualProcceror.scanFollowedCount();
+    let followedNicknames = this.checkMutualProcceror.followedNicknames;
+    let followersNicknames = this.checkMutualProcceror.followersNicknames;
 
     if(followedCount > 0 && followersCount > 0){
-      this.followedModal.open();
-      // TODO: async await
-      this.followedModal.loadFullList(); 
-      this.checkMutualProcceror.scanFollowedNicknames();
+      if(followedNicknames.length === 0){
+        // first time click
+        this.followedModal.open();
+        await this.followedModal.loadFullList();
+        this.checkMutualProcceror.scanFollowedNicknames();
+      }else{
+        // TODO: add second time ope logic
+      }
     }
   }
 }

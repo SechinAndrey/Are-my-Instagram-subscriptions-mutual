@@ -37,13 +37,29 @@ export default class Modal{
     listWrapEl.scroll(0, listEl.offsetHeight);
   }
 
-  async loadFullList(prevListElHeight = -1, prewlistWrapEl = undefined, prevListEl = undefined){
-    let listWrapEl = prewlistWrapEl;
-    let listEl = prevListEl;
-    let listElHeight;
+  async loadFullListProcessorProcessor(resolve, listWrapEl, listEl, prevListElHeight = -1){
+    if(listEl.offsetHeight == prevListElHeight){
+      return resolve();
+    }else{
+      let listElHeight = listEl.offsetHeight;
+      this.scrollToTheEndOfList(listWrapEl, listEl);
+      await sleep(100);
 
-    if(!listEl){
-      // init list, first scroll
+      let waitLoadingInterval = setInterval(async () => {
+        let loadingEl = document.querySelector(this.loadingSelector);
+        if(!loadingEl){
+          clearInterval(waitLoadingInterval);
+          return await this.loadFullListProcessorProcessor(resolve, listWrapEl, listEl, listElHeight);
+        }
+      }, 100)
+    }
+  }
+
+  async loadFullList(){
+    return new Promise( async (resolve, reject) => {
+      let listWrapEl;
+      let listEl;
+
       await new Promise(resolve => {
         let waitListElInterval = setInterval(() => {
           listEl = document.querySelector(`${this.listWrap} > ul`);
@@ -55,24 +71,12 @@ export default class Modal{
           }
         }, 100)
       })
-    }
 
-    listElHeight = listEl.offsetHeight;
+      await new Promise(resolve => {
+        this.loadFullListProcessorProcessor(resolve, listWrapEl, listEl);
+      });
 
-    if(listElHeight == prevListElHeight){
-      return;
-    }
-
-    this.scrollToTheEndOfList(listWrapEl, listEl);
-
-    await sleep(200);
-
-    let waitLoadingInterval = setInterval(() => {
-      let loadingEl = document.querySelector(this.loadingSelector);
-      if(!loadingEl){
-        clearInterval(waitLoadingInterval);
-        this.loadFullList(listElHeight, listWrapEl, listEl);
-      }
-    }, 100)
+      resolve();
+    })
   }
 };
