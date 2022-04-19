@@ -26,6 +26,6 @@
   color: rgba(var(--f75,38,38,38),1);
 }
 
-#react-root > section > main > div > header > section > ul > li:nth-child(2){
+#react-root > section > main > div > header > section > ul > li:nth-child(3){
   margin-left: 30px;
 }

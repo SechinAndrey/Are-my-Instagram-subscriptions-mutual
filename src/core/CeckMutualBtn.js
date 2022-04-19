@@ -10,7 +10,7 @@ let defaultPositionInterval = {
 export default class CheckMutualBtn {
   constructor(){
     // element to positionate CheckMutualBtn
-    this.anchorSelector = '#react-root > section > main > div > header > section > ul > li:nth-child(2)';
+    this.anchorSelector = '#react-root > section > main > div > header > section > ul > li:nth-child(3)';
     this.template = '<a id="CheckMutualBtn" tabindex="0" title="Показать взаимные подписки">🤝</a>"';
     this.el;
     

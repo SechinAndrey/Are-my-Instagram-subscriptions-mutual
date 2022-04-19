@@ -1,4 +1,4 @@
-# <img src="public/icons/icon_48.png" width="45" align="left"> Are my Instagram subscriptions sutual?
+# <img src="public/icons/icon_48.png" width="45" align="left"> Are my Instagram subscriptions mutual?
 
 Detect if your Instagram subscriptions are mutual.
 

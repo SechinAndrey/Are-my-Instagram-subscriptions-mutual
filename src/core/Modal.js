@@ -11,25 +11,34 @@ export default class Modal{
    * loadingSelector - to loading element after sroll
    */
   constructor(selectors){    
-    this.openBtn = selectors.openBtn;
-    this.closeBt = selectors.closeBtn;
-    this.listWrap = selectors.listWrap;
+    this.openBtnSelector = selectors.openBtn;
+    this.closeBtnSelector = selectors.closeBtn;
+    this.listWrapSelector = selectors.listWrap;
     this.loadingSelector = selectors.loadingSelector;
   }
 
   getModalList(){
-    return document.querySelector(this.listWrap);
+    return document.querySelector(this.listWrapSelector);
   }
 
   open(){
-    document.querySelector(this.openBtn).click();
+    document.querySelector(this.openBtnSelector).click();
   }
 
   close(){
     document.querySelector(this.closeBtnSelector).click();
   }
 
-  scrollToTheEndOfList(listWrapEl, listEl){
+  scrollTop( listWrapEl = document.querySelector(this.listWrapSelector), 
+    listEl = document.querySelector(`${this.listWrapSelector} > ul`)){
+    if(!listWrapEl || !listEl) { 
+      return;
+    }
+
+    listWrapEl.scroll(0, 0);
+  }
+
+  scrollEnd(listWrapEl, listEl){
     if(!listWrapEl || !listEl) { 
       return;
     }
@@ -42,7 +51,7 @@ export default class Modal{
       return resolve();
     }else{
       let listElHeight = listEl.offsetHeight;
-      this.scrollToTheEndOfList(listWrapEl, listEl);
+      this.scrollEnd(listWrapEl, listEl);
       await sleep(100);
 
       let waitLoadingInterval = setInterval(async () => {
@@ -62,8 +71,8 @@ export default class Modal{
 
       await new Promise(resolve => {
         let waitListElInterval = setInterval(() => {
-          listEl = document.querySelector(`${this.listWrap} > ul`);
-          listWrapEl = document.querySelector(this.listWrap);
+          listEl = document.querySelector(`${this.listWrapSelector} > ul`);
+          listWrapEl = document.querySelector(this.listWrapSelector);
 
           if(listEl){
             clearInterval(waitListElInterval);

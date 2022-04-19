@@ -1,14 +1,19 @@
 export default class CheckMutualProcceror {
-  constructor(){
+  constructor(selectors){
     // selectors
-    this.followedCountSelector = '#react-root > section > main > div > header > section > ul > li:nth-child(3) > a > div > span';
-    this.followersCountSelector = '#react-root > section > main > div > header > section > ul > li:nth-child(2) > a > div > span'
+    this.followedListSelector = selectors.followedListSelector;
+    this.followersListSelector = selectors.followersListSelector;
+
+    this.followedCountSelector = selectors.followedCountSelector;
+    this.followersCountSelector = selectors.followersCountSelector;
 
     // data
     this.followersCount;
     this.followedCount;
-    this.followersNicknames = [];
-    this.followedNicknames = [];
+    this.followers = [];
+    this.followed = [];
+
+    this.matchTemplate = '<span> 🤝 </span>';
   }
 
   scanCount(selector){
@@ -27,7 +32,42 @@ export default class CheckMutualProcceror {
     return this.scanCount(this.followersCountSelector);
   }
 
-  scanFollowedNicknames(){
-    console.log('TODO: scanFollowedNicknames');
+  /**
+   * 
+   * @param {string} userType [followers | followed]
+   * @returns Promise
+   */
+  scanUsers(userType){
+    return new Promise (resolve => {
+      this[userType] = [];
+      let lis = document.querySelectorAll(`${this[userType + 'ListSelector']} li`);
+      lis.forEach((el, index) => {
+        let userEl = el.querySelector('a > span');
+        this[userType].push({
+          el: userEl,
+          nickname: userEl.textContent
+        });
+        
+        if(index + 1 == lis.length){
+          resolve();
+        }
+      })
+    })
+  }
+
+  scanFollowed(){
+    return this.scanUsers('followed');
+  }
+
+  scanFollowers(){
+    return this.scanUsers('followers');
+  }
+
+  markMutualFollowed(){
+    this.followed.forEach((flw) => {
+      if(this.followers.some(flwr => flwr.nickname ==  flw.nickname)){
+        flw.el.insertAdjacentHTML('afterbegin', this.matchTemplate);
+      }
+    })
   }
 }
