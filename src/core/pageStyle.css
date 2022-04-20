@@ -29,3 +29,84 @@
 #react-root > section > main > div > header > section > ul > li:nth-child(3){
   margin-left: 30px;
 }
+
+.ui-overlay{
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: none;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0,0,0,.65);
+}
+
+.ui-overlay-modal{
+  width: 350px;
+  height: 140px;
+  border-radius: 12px;
+  background-color: #fafafa;
+  animation: IGCoreModalShow .1s ease-out;
+}
+
+.ui-overlay-modal-header{
+  height: 42px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: #262626;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 42px;
+  text-align: center;
+  border-bottom: 1px solid rgba(var(--b6a,219,219,219),1);
+}
+
+.ui-overlay-modal-body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 40px);
+  padding: 20px;
+  box-sizing: border-box;
+  flex-direction: column;
+}
+
+.proggers-slot{
+  width: 100%;
+}
+
+/* progress bar */
+.proggress-bar{
+  width: 100%;
+  height: 6px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(var(--b6a,219,219,219),1);
+}
+
+.proggress-bar-indicator{
+  height: 100%;
+  width: 0%;
+  transition: width 2s;
+  background: linear-gradient(90deg, #266fff, #0078ff, #008bff, #00a0ff, #00b2f3, #00c0e1, #00c9d5, #32ccd1);
+}
+
+.scanning-info{
+  display: flex;
+  flex-direction: row;
+}
+
+.magnifier-icon{
+  margin-right: 5px;
+  animation: myOrbit 2s linear infinite;
+}
+
+@keyframes myOrbit {
+  from { transform: rotate(0deg) translateX(2px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(2px) rotate(-360deg); }
+}

@@ -3,10 +3,7 @@ export default class CheckMutualProcceror {
     // selectors
     this.followedListSelector = selectors.followedListSelector;
     this.followersListSelector = selectors.followersListSelector;
-
-    this.followedCountSelector = selectors.followedCountSelector;
-    this.followersCountSelector = selectors.followersCountSelector;
-
+    
     // data
     this.followersCount;
     this.followedCount;
@@ -14,22 +11,6 @@ export default class CheckMutualProcceror {
     this.followed = [];
 
     this.matchTemplate = '<span> 🤝 </span>';
-  }
-
-  scanCount(selector){
-    try {
-      return parseInt(document.querySelector(selector).textContent); 
-    } catch (error) {
-      return -1;
-    }
-  }
-
-  scanFollowedCount(){
-    return this.scanCount(this.followedCountSelector);
-  }
-
-  scanFollowersCount(){
-    return this.scanCount(this.followersCountSelector);
   }
 
   /**

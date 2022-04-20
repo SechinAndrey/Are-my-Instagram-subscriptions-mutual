@@ -1,4 +1,4 @@
-import { sleep } from "../common/helpers";
+import { sleep, addStyleToHead } from "../common/helpers";
 
 export default class Modal{
   /**
@@ -10,23 +10,28 @@ export default class Modal{
    * listWrap - list wrap that contain ul with followers/followed,
    * loadingSelector - to loading element after sroll
    */
-  constructor(selectors){    
+  constructor(name, selectors){    
+    this.name = name;
     this.openBtnSelector = selectors.openBtn;
     this.closeBtnSelector = selectors.closeBtn;
     this.listWrapSelector = selectors.listWrap;
     this.loadingSelector = selectors.loadingSelector;
+
+    this.modalScrolled = new CustomEvent('MODAL_FETCHED', {detail: {name: this.name}});
   }
 
   getModalList(){
     return document.querySelector(this.listWrapSelector);
   }
 
-  open(){
+  open(silent = false){
+    if(silent) this.addSilentModalStyle();
     document.querySelector(this.openBtnSelector).click();
   }
 
   close(){
     document.querySelector(this.closeBtnSelector).click();
+    this.removeSilentModalStyle();
   }
 
   scrollTop( listWrapEl = document.querySelector(this.listWrapSelector), 
@@ -58,6 +63,7 @@ export default class Modal{
         let loadingEl = document.querySelector(this.loadingSelector);
         if(!loadingEl){
           clearInterval(waitLoadingInterval);
+          document.dispatchEvent(this.modalScrolled);
           return await this.loadFullListProcessorProcessor(resolve, listWrapEl, listEl, listElHeight);
         }
       }, 100)
@@ -87,5 +93,18 @@ export default class Modal{
 
       resolve();
     })
+  }
+
+  addSilentModalStyle(){
+    let css = `
+      .RnEpo.Yx5HN {
+        right: 999999px;
+      }
+    `;
+    addStyleToHead(css, 'amism-modal');
+  }
+
+  removeSilentModalStyle(){
+    document.getElementById('amism-modal').remove();
   }
 };
