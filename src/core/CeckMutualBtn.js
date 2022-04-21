@@ -22,6 +22,7 @@ export default class CheckMutualBtn {
     this.positionInterval = {...defaultPositionInterval};
 
     this.isActivitiesOpen = false;
+    this.isSearchDropdonwOpen = false;
 
     this.init();
   }
@@ -42,13 +43,13 @@ export default class CheckMutualBtn {
     // detect url change
     let lastUrl = location.href;
     new MutationObserver((mutations) => {
-      const url = location.href;
+      let url = location.href;
       if (url !== lastUrl) {
         this.onUrlChange(url, lastUrl);
         lastUrl = url;
       }
 
-      this.processActivityModalCovering(mutations);
+      this.processCovering(mutations);
 
     }).observe(document.body, {subtree: true, childList: true});
   }
@@ -107,13 +108,35 @@ export default class CheckMutualBtn {
     }, this.positionInterval.msInterval);
   }
 
-  processActivityModalCovering(mutations){
+  toggleZIndex(condition){
+    this.el.style.zIndex = condition ? 0 : 1;
+  }
+
+  processCovering(mutations){
     mutations.forEach(m => {
-      if(m.target.classList.toString().includes('_0ZPOP kIKUG') && 
-      m.addedNodes[0] && m.addedNodes[0].classList.toString().includes('_8-yf5')){
-        this.isActivitiesOpen = !this.isActivitiesOpen;   
-        this.el.style.zIndex = this.isActivitiesOpen ? 0 : 1;
-      }
+      this.processActivitiesCovering(m);
+      this.processSearchDropdownCovering(m);
     });
+  }
+
+  processActivitiesCovering(m){
+    let isActivitiesMutated = m.target.classList.toString().includes('_0ZPOP kIKUG') && 
+    m.addedNodes[0] && m.addedNodes[0].classList.toString().includes('_8-yf5');
+
+    if(isActivitiesMutated){
+      this.isActivitiesOpen = !this.isActivitiesOpen;   
+      this.toggleZIndex(this.isActivitiesOpen);
+    }
+  }
+
+  processSearchDropdownCovering(m){
+    let isSearchDropdownMutated = m.target.classList.toString().includes('QY4Ed P0xOK') && 
+    m.addedNodes[0] && m.addedNodes[0].classList.toString().includes('jLwSh') || 
+    m.removedNodes[0] && m.removedNodes[0].classList.toString().includes('jLwSh');
+
+    if(isSearchDropdownMutated){
+      this.isSearchDropdonwOpen = !this.isSearchDropdonwOpen;   
+      this.toggleZIndex(this.isSearchDropdonwOpen);
+    }
   }
 }

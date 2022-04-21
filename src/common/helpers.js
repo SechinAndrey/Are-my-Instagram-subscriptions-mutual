@@ -1,7 +1,7 @@
 import {countSelectors} from '../core/selectors';
 
 function getOffset(el) {
-  const rect = el.getBoundingClientRect();
+  let rect = el.getBoundingClientRect();
   return {
     left: rect.left + window.scrollX,
     top: rect.top + window.scrollY
@@ -29,7 +29,7 @@ function scanFollowersCount(){
 }
 
 function addStyleToHead(css, id){
-  const head = document.head,
+  let head = document.head,
   style = document.createElement('style');
 
   style.id = id;
