@@ -1,6 +1,6 @@
 import {getOffset} from '../common/helpers'
 
-let defaultPositionInterval = {
+let defaultWaitAnchorInterval = {
   id: null,
   perfomedIteration: 0,
   maxIteration: 100,
@@ -19,7 +19,7 @@ export default class CheckMutualBtn {
     this.topCorrection = 5;
     this.leftCorrection = 10;
 
-    this.positionInterval = {...defaultPositionInterval};
+    this.waitAnchorInterval = {...defaultWaitAnchorInterval};
 
     this.isActivitiesOpen = false;
     this.isSearchDropdonwOpen = false;
@@ -28,15 +28,23 @@ export default class CheckMutualBtn {
   }
 
   init(){
+    let clicked = new Event('CLICKED');
+    this.isCanProcess = false;
+
     // Mount CheckMutualBtn to body
     document.body.insertAdjacentHTML('afterbegin', this.template);
     this.el = document.getElementById('CheckMutualBtn');
     
+    this.el.addEventListener('click', () => {
+      if(this.isCanProcess) this.el.dispatchEvent(clicked);
+    });
+
     // processing btn position
     window.addEventListener('resize', this.setPosition.bind(this));
-    window.onload = () => { this.setPositionWithInterval()}
+    window.onload = () => { this.waitAnchor() }
     this.initMutationObserver();
     this.setPosition();
+    this.toggleDisable();
   }
 
   initMutationObserver(){
@@ -55,57 +63,65 @@ export default class CheckMutualBtn {
   }
 
   onUrlChange(newUrl, oldUrl){
-    this.setPositionWithInterval();
+    this.waitAnchor();
+  }
+
+  toggleDisable(){
+    this.isCanProcess = !!document.querySelector(this.anchorSelector + ' a');
+    
+    if(this.isCanProcess){ // enable back
+      this.el.style.cursor = 'pointer';
+      this.el.style.filter = 'none';
+      this.el.title = 'Показать взаимные подписки';
+    }else{ // disable button if followed modal cannot be opened
+      this.el.style.cursor = 'not-allowed';
+      this.el.style.filter = 'grayscale(1)';
+      this.el.title = 'Подписки или подписчики скрыты';
+    }
   }
 
   setPosition(){
+    let ancorPosition;
     let anchorEl = document.querySelector(this.anchorSelector);
 
-    if(!anchorEl || window.innerWidth < 735){
+    if(window.innerWidth < 735){
       this.el.style.display = 'none';
       return;
     }
 
-    let ancorPosition = getOffset(anchorEl);
-    this.el.style.display = 'block';
-    this.el.style.top = ancorPosition.top - this.topCorrection + 'px';
-    this.el.style.left = ancorPosition.left - this.el.offsetWidth - this.leftCorrection + 'px';
-    this.el.style.left = ancorPosition.left - this.el.offsetWidth - this.leftCorrection + 'px';
+    if(anchorEl){
+      ancorPosition = getOffset(anchorEl);
+
+      this.el.style.display = 'block';
+      this.el.style.top = ancorPosition.top - this.topCorrection + 'px';
+      this.el.style.left = ancorPosition.left - this.el.offsetWidth - this.leftCorrection + 'px';
+      this.el.style.left = ancorPosition.left - this.el.offsetWidth - this.leftCorrection + 'px';
+    }else{
+      if(this.el){
+        this.el.style.display = 'none';
+      }
+    }
   }
 
-  clearPositionInterval(){
-    clearInterval(this.positionInterval.id);
-    this.positionInterval = {...defaultPositionInterval};
+  clearwaitAnchorInterval(){
+    clearInterval(this.waitAnchorInterval.id);
+    this.waitAnchorInterval = {...defaultWaitAnchorInterval};
   }
 
-  setPositionWithInterval(){
-    if(this.positionInterval.id){
-      this.clearPositionInterval()
+  waitAnchor(){
+    if(this.waitAnchorInterval.id){
+      this.clearwaitAnchorInterval()
     }
     
-    this.positionInterval.id = setInterval(() => {
-      let ancorPosition;
-      let anchorEl = document.querySelector(this.anchorSelector);
+    this.waitAnchorInterval.id = setInterval(() => {
+      this.setPosition();
+      this.toggleDisable();
 
-      if(anchorEl){
-        ancorPosition = getOffset(anchorEl);
-
-        this.el.style.display = 'block';
-        this.el.style.top = ancorPosition.top - this.topCorrection + 'px';
-        this.el.style.left = ancorPosition.left - this.el.offsetWidth - this.leftCorrection + 'px';
-        this.el.style.left = ancorPosition.left - this.el.offsetWidth - this.leftCorrection + 'px';
-      }else{
-        if(this.el){
-          this.el.style.display = 'none';
-        }
+      this.waitAnchorInterval.perfomedIteration++;
+      if(this.waitAnchorInterval.perfomedIteration >= this.waitAnchorInterval.maxIteration){
+        this.clearwaitAnchorInterval();
       }
-
-      this.positionInterval.perfomedIteration++;
-
-      if(this.positionInterval.perfomedIteration >= this.positionInterval.maxIteration){
-        this.clearPositionInterval();
-      }
-    }, this.positionInterval.msInterval);
+    }, this.waitAnchorInterval.msInterval);
   }
 
   toggleZIndex(condition){
