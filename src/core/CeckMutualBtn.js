@@ -1,4 +1,5 @@
 import {getOffset} from '../common/helpers'
+import {checkMutualBtnSelectors} from './selectors';
 
 let defaultWaitAnchorInterval = {
   id: null,
@@ -10,8 +11,9 @@ let defaultWaitAnchorInterval = {
 export default class CheckMutualBtn {
   // 🕵️‍♂️ 🤝
   constructor(){
-    // element to positionate CheckMutualBtn
-    this.anchorSelector = '#react-root > section > main > div > header > section > ul > li:nth-child(3)';
+    this.anchorSelector = checkMutualBtnSelectors.anchorSelector;
+    this.followedOpenBtnSelector = checkMutualBtnSelectors.followedOpenBtn;
+    this.followersOpenBtnSelector = checkMutualBtnSelectors.followersOpenBtn;
     this.template = '<a id="CheckMutualBtn" tabindex="0" title="Показать взаимные подписки">🤝</a>"';
     this.el;
     
@@ -24,12 +26,13 @@ export default class CheckMutualBtn {
     this.isActivitiesOpen = false;
     this.isSearchDropdonwOpen = false;
 
+    this.isCanProcess = false;
+
     this.init();
   }
 
   init(){
     let clicked = new Event('CLICKED');
-    this.isCanProcess = false;
 
     // Mount CheckMutualBtn to body
     document.body.insertAdjacentHTML('afterbegin', this.template);
@@ -67,7 +70,10 @@ export default class CheckMutualBtn {
   }
 
   toggleDisable(){
-    this.isCanProcess = !!document.querySelector(this.anchorSelector + ' a');
+    let isFollowedOpenBtnAvaliable = !!document.querySelector(this.followedOpenBtnSelector),
+        isFollowersOpenBtnAvaliable = !!document.querySelector(this.followersOpenBtnSelector);
+
+    this.isCanProcess = isFollowedOpenBtnAvaliable && isFollowersOpenBtnAvaliable;
     
     if(this.isCanProcess){ // enable back
       this.el.style.cursor = 'pointer';
@@ -76,7 +82,7 @@ export default class CheckMutualBtn {
     }else{ // disable button if followed modal cannot be opened
       this.el.style.cursor = 'not-allowed';
       this.el.style.filter = 'grayscale(1)';
-      this.el.title = 'Подписки или подписчики скрыты';
+      this.el.title = 'Ууупс, подписчики или подписки недоступны или отсутствуют';
     }
   }
 

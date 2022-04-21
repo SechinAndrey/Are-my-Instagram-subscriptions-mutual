@@ -22,4 +22,10 @@ let modalsUserListSelectors = {
   followersListSelector: followersSelectors.listWrap + ' ul'
 }
 
-export {followedSelectors, followersSelectors, countSelectors, modalsUserListSelectors}
+let checkMutualBtnSelectors = {
+  anchorSelector: '#react-root > section > main > div > header > section > ul > li:nth-child(3)',
+  followedOpenBtn: followedSelectors.openBtn,
+  followersOpenBtn: followersSelectors.openBtn
+}
+
+export {followedSelectors, followersSelectors, countSelectors, modalsUserListSelectors, checkMutualBtnSelectors}
