@@ -20,7 +20,7 @@ export default class AppManager{
     let followersCount = scanFollowersCount();
     let followed = this.checkMutualProcceror.followed;
     let followers = this.checkMutualProcceror.followers;
-
+    
     if(followedCount > 0 && followersCount > 0){
       if(followers.length === 0 && followed.length === 0){
         // first time click

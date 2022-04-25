@@ -12,20 +12,20 @@ function sleep(ms){
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function scanInt(selector){
+function scanInt(selector, attr = 'textContent'){
   try {
-    return parseInt(document.querySelector(selector).textContent); 
+    return parseInt(document.querySelector(selector)[attr].replaceAll(',', '').trim()); 
   } catch (error) {
     return -1;
   }
 }
 
 function scanFollowedCount(){
-  return scanInt(countSelectors.followedCountSelector);
+  return scanInt(countSelectors.followedCountSelector, 'title') || scanInt(countSelectors.followedCountSelector);
 }
 
 function scanFollowersCount(){
-  return scanInt(countSelectors.followersCountSelector);
+  return scanInt(countSelectors.followersCountSelector, 'title') || scanInt(countSelectors.followersCountSelector);
 }
 
 function addStyleToHead(css, id){

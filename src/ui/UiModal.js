@@ -53,8 +53,8 @@ export default class UiModal {
     }else{
       this.fetchedFollowedCount = this.scanFetchedFollowedCount();
     }
-    let rercent = (this.fetchedFollowersCount + this.fetchedFollowedCount) / (scanFollowersCount() + scanFollowedCount()) * 100;
-    this.changePercentage(rercent);
+    let percent = (this.fetchedFollowersCount + this.fetchedFollowedCount) / (scanFollowersCount() + scanFollowedCount()) * 100;
+    this.changePercentage(percent);
   }
 
   changePercentage(percent){
