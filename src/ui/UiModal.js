@@ -1,10 +1,11 @@
 import {addStyleToHead} from '../common/helpers';
 
 export default class UiModal {
-  constructor(template){
+  constructor(name, template){
+    this.name = name;
     // Mount UiModal to body
     document.body.insertAdjacentHTML('afterbegin', template);
-    this.el = document.getElementById('UiModal');
+    this.el = document.getElementById(name);
   }
 
   open(){

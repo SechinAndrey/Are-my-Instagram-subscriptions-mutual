@@ -1,0 +1,65 @@
+.ui-overlay-modal.subscriptions{
+  height: 80%;
+  width: 400px;
+}
+
+.subscriptions > .ui-overlay-modal-body{
+  display: block;
+  padding: 0 0 10px 0;
+}
+
+.scannig-info{
+  display: flex;
+  padding: 10px 15px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.scannig-info > .amism-btn{
+  font-size: 12px;
+}
+
+.scannig-date{
+  color: #8e8e8e;
+  font-size: 12px;
+}
+
+.followed-list-wrap{
+  height: calc(100% - 50px);
+  overflow: auto;
+}
+
+.followed-item{
+  padding: 5px 15px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.avatar-with-names{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+}
+
+.followed-item-avatar{
+  width: 30px;
+  border-radius: 100%;
+  margin-right: 12px;
+}
+
+.followed-item-nickname{
+  font-weight: 600;
+  color: #262626 !important;
+}
+
+.followed-item-nickname:hover{
+  text-decoration: underline;
+}
+
+.followed-item-name{
+  color: #8e8e8e;
+}
