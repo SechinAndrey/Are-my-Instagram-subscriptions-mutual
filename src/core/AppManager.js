@@ -2,7 +2,7 @@ import CheckMutualBtn from './CeckMutualBtn';
 import Modal from './Modal';
 import CheckMutualProcceror from './CheckMutualProcceror';
 import {sleep, scanFollowedCount, scanFollowersCount} from '../common/helpers';
-import UiModal from '../ui/UiModal';
+import ProgressUiModal from '../ui/ProgressUiModal';
 
 import {followedSelectors, followersSelectors, modalsUserListSelectors} from './selectors';
 
@@ -12,7 +12,7 @@ export default class AppManager{
     this.followersModal = new Modal('followers', followersSelectors);
     this.checkMutualBtn = new CheckMutualBtn();
     this.checkMutualProcceror = new CheckMutualProcceror(modalsUserListSelectors);
-    this.uiModal = new UiModal();
+    this.progressUiModal = new ProgressUiModal();
   }
 
   async process(){
@@ -36,7 +36,7 @@ export default class AppManager{
 
   processFollowers(){
     return new Promise(async resolve => {
-      this.uiModal.open();
+      this.progressUiModal.open();
       this.followersModal.open(true);
       await this.followersModal.loadFullList();
       await this.checkMutualProcceror.scanFollowers();
@@ -52,7 +52,7 @@ export default class AppManager{
       await this.checkMutualProcceror.scanFollowed();
       this.checkMutualProcceror.markMutualFollowed();
       this.followedModal.scrollTop();
-      this.uiModal.close();
+      this.progressUiModal.close();
       this.followedModal.removeSilentModalStyle();
       resolve();
     })
@@ -65,7 +65,7 @@ export default class AppManager{
     this.checkMutualProcceror.markMutualFollowed();
   }
 
-  toggleUiModal(isOpen){
-    isOpen ? this.uiModal.close() : this.uiModal.open();
+  toggleProgressUiModal(isOpen){
+    isOpen ? this.progressUiModal.close() : this.progressUiModal.open();
   }
 }
