@@ -105,6 +105,9 @@ export default class Modal{
   }
 
   removeSilentModalStyle(){
-    document.getElementById('amism-modal').remove();
+    let elToRemove = document.getElementById('amism-modal');
+    if(elToRemove) { 
+      elToRemove.remove();
+    }
   }
 };

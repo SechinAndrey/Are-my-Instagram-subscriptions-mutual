@@ -6,7 +6,7 @@ export default class ProgressModal extends UiModal{
   constructor(){
     let template = `
       <div id="ProgressModal" class="ui-overlay">
-        <div class="ui-overlay-modal-subscriptions">
+        <div class="ui-overlay-modal">
           <div class="ui-overlay-modal-header">
             <span class="magnifier-icon"> 🔍 </span>
             <h1>Сканирование</h1>

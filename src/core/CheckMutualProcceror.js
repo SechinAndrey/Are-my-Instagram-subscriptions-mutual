@@ -1,16 +1,18 @@
+import {modalsUserListSelectors, followedSelectors, followersSelectors} from './selectors';
+
 export default class CheckMutualProcceror {
-  constructor(selectors){
+  constructor(){
     // selectors
-    this.followedListSelector = selectors.followedListSelector;
-    this.followersListSelector = selectors.followersListSelector;
+    this.followedListSelector = modalsUserListSelectors.followedListSelector;
+    this.followersListSelector = modalsUserListSelectors.followersListSelector;
+    this.followedSelectors = followedSelectors;
+    this.followersSelectors = followersSelectors;
     
     // data
     this.followersCount;
     this.followedCount;
     this.followers = [];
     this.followed = [];
-
-    this.matchTemplate = '<span> 🤝 </span>';
   }
 
   /**
@@ -22,11 +24,11 @@ export default class CheckMutualProcceror {
     return new Promise (resolve => {
       this[userType] = [];
       let lis = document.querySelectorAll(`${this[userType + 'ListSelector']} li`);
-      lis.forEach((el, index) => {
-        let userEl = el.querySelector('a > span');
+      lis.forEach((li, index) => {
         this[userType].push({
-          el: userEl,
-          nickname: userEl.textContent
+          avatarUrl: li.querySelector('img').src,
+          nickname: li.querySelector(this[`${userType}Selectors`].nickname).textContent,
+          name: li.querySelector(this[`${userType}Selectors`].name).textContent
         });
         
         if(index + 1 == lis.length){
@@ -45,10 +47,20 @@ export default class CheckMutualProcceror {
   }
 
   markMutualFollowed(){
-    this.followed.forEach((flw) => {
-      if(this.followers.some(flwr => flwr.nickname ==  flw.nickname)){
-        flw.el.insertAdjacentHTML('afterbegin', this.matchTemplate);
-      }
-    })
+    return new Promise(resolve => {
+      this.followed.forEach((flw, index) => {
+        flw.isMutual = this.followers.some(flwr => flwr.nickname ==  flw.nickname);
+        if(index + 1 == this.followed.length){
+          resolve();
+        }
+      })
+    });
+  }
+
+  clear(){
+    this.followersCount = undefined;
+    this.followedCount = undefined;
+    this.followers = [];
+    this.followed = [];
   }
 }

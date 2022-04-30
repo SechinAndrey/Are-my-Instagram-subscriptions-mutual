@@ -43,6 +43,11 @@
   flex-direction: row;
   align-items: center;
   align-content: center;
+  max-width: calc(100% - 100px);
+}
+
+.names-wrap {
+  max-width: calc(100% - 42px);
 }
 
 .followed-item-avatar{
@@ -54,6 +59,10 @@
 .followed-item-nickname{
   font-weight: 600;
   color: #262626 !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
 }
 
 .followed-item-nickname:hover{
@@ -62,4 +71,8 @@
 
 .followed-item-name{
   color: #8e8e8e;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
 }

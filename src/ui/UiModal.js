@@ -1,11 +1,17 @@
 import {addStyleToHead} from '../common/helpers';
 
 export default class UiModal {
-  constructor(name, template){
+  constructor(name, template, closeOnOverlayClick = false){
     this.name = name;
     // Mount UiModal to body
     document.body.insertAdjacentHTML('afterbegin', template);
     this.el = document.getElementById(name);
+    if(closeOnOverlayClick){
+      this.el.addEventListener('click', (e) => {
+        if (e.target !== e.currentTarget){ return; }
+        this.close();
+      })
+    }
   }
 
   open(){
