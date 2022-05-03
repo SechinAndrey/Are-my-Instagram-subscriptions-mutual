@@ -15,30 +15,49 @@ export default class AppManager{
     this.checkMutualProcceror = new CheckMutualProcceror();
     this.progressModal = new ProgressModal();
     this.subscriptionsModal = new SubscriptionsModal();
+
+    document.querySelector('#SubscriptionsModal #RescanBtn').addEventListener('RESCAN_CLICKED', async () => {
+      await this.scan();
+      this.displayScanResult(await this.getCurentUserFromStorage());
+    })
   }
 
   async process(){
+    let storageUser = await this.getCurentUserFromStorage();
+    if(storageUser){
+      this.displayScanResult(storageUser);
+    }else{
+      await this.scan();
+      this.displayScanResult(await this.getCurentUserFromStorage());
+    }
+  }
+
+  async getCurentUserFromStorage(){
+    let nickname = window.location.href.split('/').slice(-2, -1);
+    let userInStorage = await Storage.get(nickname);
+    return userInStorage[nickname];
+  }
+
+  displayScanResult(scanResultFromStorage){
+    this.subscriptionsModal.open();
+    this.subscriptionsModal.renderScanResult(scanResultFromStorage);
+  }
+
+  async scan(){
     let followedCount = scanFollowedCount();
     let followersCount = scanFollowersCount();
     let nickname = window.location.href.split('/').slice(-2, -1);
-    let userInStorage = await Storage.get(nickname);
 
-    if(userInStorage && userInStorage[nickname]){
-      this.subscriptionsModal.open();
-      this.subscriptionsModal.renderScanResult(userInStorage[nickname]);
-    }else if(followedCount > 0 && followersCount > 0){
+    if(followedCount > 0 && followersCount > 0){
       this.checkMutualProcceror.clear();
       await this.processFollowers();
       await sleep(500);
       await this.processFollowed();
-      // check if profiles in storage > 10 delete last
-      // todo: add
+      await Storage.remove(nickname);
+      // TODO: test processLimit
+      // Storage.processLimit();
       // save results to store
       await Storage.saveScanResult(nickname, this.checkMutualProcceror.followed);
-      // show subscriptions modal
-      this.subscriptionsModal.open();
-      // todo: error check!!
-      this.subscriptionsModal.renderScanResult(userInStorage[nickname]);
       console.log('TA-DA!!!!!!!');
     }
   }

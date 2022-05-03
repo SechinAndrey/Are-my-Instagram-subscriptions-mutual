@@ -12,7 +12,7 @@ export default class SubscriptionsModal extends UiModal {
         <div class="ui-overlay-modal-body">
           <div class="scannig-info">
             <div class="scannig-date"></div>
-            <div class="amism-btn">Сканировать повторно</div>
+            <div id="RescanBtn" class="amism-btn">Сканировать повторно</div>
           </div>
           <div class="followed-list-wrap">
             <ul class="followed-list">
@@ -26,6 +26,7 @@ export default class SubscriptionsModal extends UiModal {
     this.followedListEl = document.querySelector('#SubscriptionsModal .followed-list');
     this.scannigDateEl = document.querySelector('#SubscriptionsModal .scannig-date');
     this.followedCountEl = document.querySelector('#SubscriptionsModal .ui-overlay-modal-header-count');
+    this.rescanBtnEl = document.querySelector('#SubscriptionsModal #RescanBtn');
   }
 
   clearItemsList(){
@@ -88,6 +89,12 @@ export default class SubscriptionsModal extends UiModal {
 
     this.scannigDateEl.innerHTML = `Отсканировано ${date} в ${time}`;
     this.followedCountEl.innerHTML = `(${followed.length})`;
+
+    this.rescanBtnEl.addEventListener('click', (e) => {
+      this.close();
+      this.clearItemsList();
+      e.currentTarget.dispatchEvent(new Event('RESCAN_CLICKED'))
+    });
 
     followed.sort((a, b) => {return this.sortingMutualFirst(a, b)}).forEach(flw => {
       this.addItemToList(flw);
