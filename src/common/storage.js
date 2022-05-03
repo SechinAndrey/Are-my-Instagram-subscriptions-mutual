@@ -1,7 +1,7 @@
 import LZString from "lz-string";
 
 export default {
-  scanResultLimit: 10,
+  scanResultLimit: 5,
 
   get(keys){
     return chrome.storage.local.get(keys);
@@ -31,7 +31,6 @@ export default {
   },
   
   processLimit(){
-    // TODO: test
     return new Promise(async (resolve) => {
       let oldestKey;
       let oldestResult;
@@ -44,7 +43,7 @@ export default {
           let scanResult = scanResults[key];
 
           if(oldestResult){
-            if(scanResult.date && oldestResult.date && new Date(scanResult.date) > new Date(oldestResult.date)){
+            if(scanResult.date && oldestResult.date && new Date(scanResult.date) < new Date(oldestResult.date)){
               oldestResult = scanResult;
               oldestKey = key;
             }
@@ -58,6 +57,8 @@ export default {
             resolve();
           }
         });
+      }else{
+        resolve();
       }
     });  
   }

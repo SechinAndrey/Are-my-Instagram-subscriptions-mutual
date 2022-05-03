@@ -54,9 +54,7 @@ export default class AppManager{
       await sleep(500);
       await this.processFollowed();
       await Storage.remove(nickname);
-      // TODO: test processLimit
-      // Storage.processLimit();
-      // save results to store
+      await Storage.processLimit();
       await Storage.saveScanResult(nickname, this.checkMutualProcceror.followed);
       console.log('TA-DA!!!!!!!');
     }

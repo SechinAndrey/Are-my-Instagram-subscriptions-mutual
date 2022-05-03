@@ -30,6 +30,17 @@ export default class ProgressModal extends UiModal{
     document.addEventListener('MODAL_FETCHED', (e) => this.modalFetchedEventProcessor(e))
   }
 
+  clear(){
+    this.fetchedFollowedCount = 0;
+    this.fetchedFollowersCount = 0;
+    this.changePercentage(0);
+  }
+
+  close(){
+    this.clear();
+    super.close();
+  }
+
   modalFetchedEventProcessor(e){
     if(e.detail.name == 'followers'){
       this.fetchedFollowersCount = this.scanFetchedFollowersCount();

@@ -32,6 +32,11 @@ export default class SubscriptionsModal extends UiModal {
   clearItemsList(){
     this.followedListEl.innerHTML = "";
   }
+  
+  close(){
+    this.clearItemsList();
+    super.close();
+  }
 
   addItemToList(user){
     let liEl = document.createElement('li');
@@ -92,7 +97,6 @@ export default class SubscriptionsModal extends UiModal {
 
     this.rescanBtnEl.addEventListener('click', (e) => {
       this.close();
-      this.clearItemsList();
       e.currentTarget.dispatchEvent(new Event('RESCAN_CLICKED'))
     });
 
