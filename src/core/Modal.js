@@ -51,7 +51,7 @@ export default class Modal{
     listWrapEl.scroll(0, listEl.offsetHeight);
   }
 
-  async loadFullListProcessorProcessor(resolve, listWrapEl, listEl, prevListElHeight = -1){
+  async loadFullListProcessor(resolve, listWrapEl, listEl, prevListElHeight = -1){
     if(listEl.offsetHeight == prevListElHeight){
       return resolve();
     }else{
@@ -64,7 +64,7 @@ export default class Modal{
         if(!loadingEl){
           clearInterval(waitLoadingInterval);
           document.dispatchEvent(this.modalScrolled);
-          return await this.loadFullListProcessorProcessor(resolve, listWrapEl, listEl, listElHeight);
+          return await this.loadFullListProcessor(resolve, listWrapEl, listEl, listElHeight);
         }
       }, 100)
     }
@@ -88,7 +88,7 @@ export default class Modal{
       })
 
       await new Promise(resolve => {
-        this.loadFullListProcessorProcessor(resolve, listWrapEl, listEl);
+        this.loadFullListProcessor(resolve, listWrapEl, listEl);
       });
 
       resolve();

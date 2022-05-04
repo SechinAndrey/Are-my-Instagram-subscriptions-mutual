@@ -1,7 +1,7 @@
 import CheckMutualBtn from './CeckMutualBtn';
 import Modal from './Modal';
 import CheckMutualProcceror from './CheckMutualProcceror';
-import {sleep, scanFollowedCount, scanFollowersCount} from '../common/helpers';
+import {sleep, scanFollowedCount, scanFollowersCount, onLoad, nTimesInterval} from '../common/helpers';
 import ProgressModal from '../ui/ProgressModal';
 import Storage from '../common/storage';
 import SubscriptionsModal from '../ui/SubscriptionsModal';
@@ -20,6 +20,10 @@ export default class AppManager{
       await this.scan();
       this.displayScanResult(await this.getCurentUserFromStorage());
     })
+
+    onLoad(() => { 
+      this.processOpenUnfollowModal();
+    });
   }
 
   async process(){
@@ -86,5 +90,22 @@ export default class AppManager{
 
   toggleProgressModal(isOpen){
     isOpen ? this.progressModal.close() : this.progressModal.open();
+  }
+
+  async processOpenUnfollowModal() {
+    let {open_unfollow_modal: nickname} = await Storage.get('open_unfollow_modal');
+    let openFollowModalBtnSelector = '#react-root > section > main > div > header > section > div.XBGH5 > div.qF0y9.Igw0E.IwRSH.eGOV_.ybXk5._4EzTm.bPdm3 > div > div.qF0y9.Igw0E.IwRSH.eGOV_.acqo5._4EzTm.soMvl > div > span > span.vBF20._1OSdk > button';
+    let openFollowModalBtnEl = document.querySelector(openFollowModalBtnSelector);
+    
+    if(nickname && location.href.includes(nickname)){
+      let intervalId = nTimesInterval(50, () => {
+        if(openFollowModalBtnEl){
+          openFollowModalBtnEl.click();
+          clearInterval(intervalId);
+          Storage.remove('open_unfollow_modal');
+        }
+        openFollowModalBtnEl = document.querySelector(openFollowModalBtnSelector);
+      });
+    }
   }
 }

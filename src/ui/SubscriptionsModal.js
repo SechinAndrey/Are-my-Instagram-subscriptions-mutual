@@ -1,5 +1,6 @@
 import UiModal from './UiModal';
-import LZString from "lz-string";
+import LZString from 'lz-string';
+import Storage from '../common/storage';
 
 export default class SubscriptionsModal extends UiModal {
   constructor(){
@@ -62,14 +63,15 @@ export default class SubscriptionsModal extends UiModal {
     liEl.className = 'followed-item';
     liEl.insertAdjacentHTML('afterbegin', newLiTemplate);
     liEl.querySelector('.amism-btn').addEventListener('click', () => {
-      this.followedBtnHandler(nickname);
+      this.followedBtnHandler(user.nickname);
     });
 
     this.followedListEl.appendChild(liEl);
   }
 
   followedBtnHandler(nickname){
-    console.log(nickname);
+    Storage.set('open_unfollow_modal', nickname);
+    window.open(`https://www.instagram.com/${nickname}/`);
   }
 
   sortingMutualFirst(a, b){

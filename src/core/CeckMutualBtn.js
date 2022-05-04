@@ -1,11 +1,11 @@
-import {getOffset} from '../common/helpers'
+import {getOffset, onLoad} from '../common/helpers'
 import {checkMutualBtnSelectors} from './selectors';
 
 let defaultWaitAnchorInterval = {
   id: null,
   perfomedIteration: 0,
   maxIteration: 100,
-  msInterval: 100
+  ms: 100
 }
 
 export default class CheckMutualBtn {
@@ -44,7 +44,9 @@ export default class CheckMutualBtn {
 
     // processing btn position
     window.addEventListener('resize', this.setPosition.bind(this));
-    window.onload = () => { this.waitAnchor() }
+    onLoad(() => {
+      this.waitAnchor()
+    });
     this.initMutationObserver();
     this.setPosition();
     this.toggleDisable();
@@ -127,7 +129,7 @@ export default class CheckMutualBtn {
       if(this.waitAnchorInterval.perfomedIteration >= this.waitAnchorInterval.maxIteration){
         this.clearwaitAnchorInterval();
       }
-    }, this.waitAnchorInterval.msInterval);
+    }, this.waitAnchorInterval.ms);
   }
 
   toggleZIndex(condition){

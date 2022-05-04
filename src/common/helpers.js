@@ -37,4 +37,26 @@ function addStyleToHead(css, id){
   style.appendChild(document.createTextNode(css)); 
 }
 
-export {getOffset, sleep, scanInt, scanFollowedCount, scanFollowersCount, addStyleToHead}
+function onLoad(fn){
+  if (document.readyState !== 'loading') {
+    fn();
+  } else {
+    document.addEventListener('DOMContentLoaded', function () {
+      fn();
+    });
+  }
+}
+
+function nTimesInterval(attempts, fn, ms = 500){
+  let attempt = 0;
+  let intervalId = setInterval(() => {   
+    fn();
+    attempt++;
+    if(attempt >= attempts){
+      clearInterval(intervalId);
+    }
+  }, ms)
+  return intervalId;
+}
+
+export {getOffset, sleep, scanInt, scanFollowedCount, scanFollowersCount, addStyleToHead, onLoad, nTimesInterval}
