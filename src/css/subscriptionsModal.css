@@ -8,6 +8,12 @@
   padding: 0 0 10px 0;
 }
 
+.subscriptions .close-modal-btn{
+  cursor: pointer;
+  position: absolute;
+  right: 14px;
+}
+
 .scannig-info{
   display: flex;
   padding: 10px 15px;

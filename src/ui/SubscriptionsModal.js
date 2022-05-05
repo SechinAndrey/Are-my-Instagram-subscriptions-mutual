@@ -1,6 +1,7 @@
 import UiModal from './UiModal';
 import LZString from 'lz-string';
 import Storage from '../common/storage';
+import { onLoad } from '../common/helpers';
 
 export default class SubscriptionsModal extends UiModal {
   constructor(){
@@ -14,6 +15,10 @@ export default class SubscriptionsModal extends UiModal {
             Взаимных:
             <span class="ui-overlay-modal-header-mutual-count"></span>
           </h1>
+          <svg class="close-modal-btn" aria-label="Закрыть" class="_8-yf5 " color="#262626" fill="#262626" height="18" role="img" viewBox="0 0 24 24" width="18">
+            <polyline fill="none" points="20.643 3.357 12 12 3.353 20.647" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></polyline>
+            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" x1="20.649" x2="3.354" y1="20.649" y2="3.354"></line>
+          </svg>
         </div>
         <div class="ui-overlay-modal-body">
           <div class="scannig-info">
@@ -33,7 +38,14 @@ export default class SubscriptionsModal extends UiModal {
     this.scannigDateEl = document.querySelector('#SubscriptionsModal .scannig-date');
     this.followedCountEl = document.querySelector('#SubscriptionsModal .ui-overlay-modal-header-count');
     this.mutualCountEl = document.querySelector('#SubscriptionsModal .ui-overlay-modal-header-mutual-count');
+    this.closeModalBtnEl = document.querySelector('#SubscriptionsModal .close-modal-btn');
     this.rescanBtnEl = document.querySelector('#SubscriptionsModal #RescanBtn');
+
+    onLoad(() => {
+      this.closeModalBtnEl.addEventListener('click', () => {
+        this.close();
+      });
+    });
   }
 
   clearItemsList(){
