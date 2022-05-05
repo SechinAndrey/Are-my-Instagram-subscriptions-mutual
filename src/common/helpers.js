@@ -59,4 +59,21 @@ function nTimesInterval(attempts, fn, ms = 500){
   return intervalId;
 }
 
-export {getOffset, sleep, scanInt, scanFollowedCount, scanFollowersCount, addStyleToHead, onLoad, nTimesInterval}
+function ms2HMS(duration){
+  let h = Math.floor(duration/(1000*60*60)),
+      m = Math.floor(duration/(1000*60))%60,
+      s = Math.floor(duration/1000)%60;
+  return `${h != 0 ? h.toString().padStart(2, 0) + ':' : ''}${m.toString().padStart(2, 0)}:${s.toString().padStart(2, 0)}`;
+}
+
+export {
+  getOffset,
+  sleep,
+  scanInt,
+  scanFollowedCount,
+  scanFollowersCount,
+  addStyleToHead,
+  onLoad,
+  nTimesInterval,
+  ms2HMS
+}

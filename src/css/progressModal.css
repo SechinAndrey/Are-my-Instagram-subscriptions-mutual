@@ -1,5 +1,17 @@
+#ProgressModal .ui-overlay-modal-body{
+  padding: 0 20px 20px 20px 20px;
+}
+
+.timer-slot{
+  font-size: 14px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #8e8e8e;
+}
+
 .proggers-slot{
   width: 100%;
+  margin-bottom: 7px;
 }
 
 /* progress bar */
