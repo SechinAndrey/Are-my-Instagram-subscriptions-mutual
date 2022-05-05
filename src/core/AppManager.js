@@ -16,12 +16,8 @@ export default class AppManager{
     this.progressModal = new ProgressModal();
     this.subscriptionsModal = new SubscriptionsModal();
 
-    document.querySelector('#SubscriptionsModal #RescanBtn').addEventListener('RESCAN_CLICKED', async () => {
-      await this.scan();
-      this.displayScanResult(await this.getCurentUserFromStorage());
-    })
-
-    onLoad(() => { 
+    onLoad(() => {
+      this.processRescan();
       this.processOpenUnfollowModal();
     });
   }
@@ -106,6 +102,15 @@ export default class AppManager{
         }
         openFollowModalBtnEl = document.querySelector(openFollowModalBtnSelector);
       });
+    }
+  }
+
+  async processRescan(){
+    let {rescan} = await Storage.get('rescan');
+    if(rescan){
+      await this.scan();
+      this.displayScanResult(await this.getCurentUserFromStorage());
+      Storage.remove('rescan');
     }
   }
 }

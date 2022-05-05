@@ -97,9 +97,9 @@ export default class SubscriptionsModal extends UiModal {
     this.scannigDateEl.innerHTML = `Отсканировано ${date} в ${time}`;
     this.followedCountEl.innerHTML = `(${followed.length})`;
 
-    this.rescanBtnEl.addEventListener('click', (e) => {
-      this.close();
-      e.currentTarget.dispatchEvent(new Event('RESCAN_CLICKED'))
+    this.rescanBtnEl.addEventListener('click', async () => {
+      await Storage.set('rescan', true);
+      location.reload();
     });
 
     followed.sort((a, b) => {return this.sortingMutualFirst(a, b)}).forEach(flw => {
