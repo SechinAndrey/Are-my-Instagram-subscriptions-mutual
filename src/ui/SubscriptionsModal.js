@@ -8,7 +8,12 @@ export default class SubscriptionsModal extends UiModal {
     <div id="SubscriptionsModal" class="ui-overlay">
       <div class="ui-overlay-modal subscriptions">
         <div class="ui-overlay-modal-header">
-          <h1>Подпписки <span class="ui-overlay-modal-header-count"></span> </h1>
+          <h1>
+            Подпписок:
+            <span class="ui-overlay-modal-header-count"></span>
+            Взаимных:
+            <span class="ui-overlay-modal-header-mutual-count"></span>
+          </h1>
         </div>
         <div class="ui-overlay-modal-body">
           <div class="scannig-info">
@@ -27,6 +32,7 @@ export default class SubscriptionsModal extends UiModal {
     this.followedListEl = document.querySelector('#SubscriptionsModal .followed-list');
     this.scannigDateEl = document.querySelector('#SubscriptionsModal .scannig-date');
     this.followedCountEl = document.querySelector('#SubscriptionsModal .ui-overlay-modal-header-count');
+    this.mutualCountEl = document.querySelector('#SubscriptionsModal .ui-overlay-modal-header-mutual-count');
     this.rescanBtnEl = document.querySelector('#SubscriptionsModal #RescanBtn');
   }
 
@@ -93,9 +99,10 @@ export default class SubscriptionsModal extends UiModal {
       minute: "2-digit"
     }).split(', ');
     let followed = JSON.parse(LZString.decompressFromUTF16(result.followed));
+    let mutualCount = 0;
 
     this.scannigDateEl.innerHTML = `Отсканировано ${date} в ${time}`;
-    this.followedCountEl.innerHTML = `(${followed.length})`;
+    this.followedCountEl.innerHTML = `${followed.length} /`;
 
     this.rescanBtnEl.addEventListener('click', async () => {
       await Storage.set('rescan', true);
@@ -103,7 +110,10 @@ export default class SubscriptionsModal extends UiModal {
     });
 
     followed.sort((a, b) => {return this.sortingMutualFirst(a, b)}).forEach(flw => {
+      if(flw.isMutual){mutualCount ++}
       this.addItemToList(flw);
     });
+
+    this.mutualCountEl.innerHTML = `${mutualCount}`;
   }
 }
