@@ -7,11 +7,36 @@
 </head>
 <body>
   <div class="app">
-    <div class="button-container">
-      <button id="checkIFMutualtBtn" class="button">Check if my Instagram subscriptions mutual</button>
+    <div class="instruction">
+      <div class="popup-header">
+        <img src="icons/32.png" alt="">
+        <h1>Взаимны ли мои Instagram пододписки?</h1>
+      </div>
+      <div class="popup-body">
+        <div class="popup-body-intro">
+          <div class="notification notification-warn">
+            <div class="notification-icon">☝️</div>
+            <div class="notification-text">
+              Это расширение предназначено в первую очередь для сканирования <b>своего профиля 
+              (тот провиль для которго выполнен вход в браузере)</b>. 
+              Вы можете использовать его для сканирования другого профиля но возможны наточности из-за особенностей
+              работы вэб версии Instagram.
+            </div>
+          </div>
+          <div class="notification notification-regular">
+            <div class="notification-text">
+              <p>
+                Чтобы начать откройте страницу своего профиля в 
+                <a href="https://www.instagram.com/"><b>instagram</b></a> и нажмите кнопку сканирования
+              </p>
+              <img class="intro-img" src="imgs/profile_with_btn_ru_s-a.png" alt="insruction">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="scanned-reults"></div>
   </div>
-
   <script src="popup.js"></script>
 </body>
 </html>

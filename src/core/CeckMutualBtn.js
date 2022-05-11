@@ -14,7 +14,7 @@ export default class CheckMutualBtn {
     this.anchorSelector = checkMutualBtnSelectors.anchorSelector;
     this.followedOpenBtnSelector = checkMutualBtnSelectors.followedOpenBtn;
     this.followersOpenBtnSelector = checkMutualBtnSelectors.followersOpenBtn;
-    this.template = '<a id="CheckMutualBtn" class="amism-btn" tabindex="0" title="Показать взаимные подписки">🤝</a>"';
+    this.template = '<a id="CheckMutualBtn" class="amism-btn" tabindex="0" title="Показать взаимные подписки">🕵️‍♂️</a>"';
     this.el;
     
     // correctionvalue to positionate CheckMutualBtn
