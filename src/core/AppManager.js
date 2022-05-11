@@ -46,16 +46,17 @@ export default class AppManager{
   async scan(){
     let followedCount = scanFollowedCount();
     let followersCount = scanFollowersCount();
-    let nickname = window.location.href.split('/').slice(-2, -1);
 
     if(followedCount > 0 && followersCount > 0){
+      let nickname = window.location.href.split('/').slice(-2, -1);
+      let avatarUrl = document.querySelector('#react-root > section > main > div > header > div > div > div > button > img').src;
       this.checkMutualProcceror.clear();
       await this.processFollowers();
       await sleep(500);
       await this.processFollowed();
       await Storage.remove(nickname);
       await Storage.processLimit();
-      await Storage.saveScanResult(nickname, this.checkMutualProcceror.followed);
+      await Storage.saveScanResult({nickname, avatarUrl}, this.checkMutualProcceror.followed);
       console.log('TA-DA!!!!!!!');
     }
   }

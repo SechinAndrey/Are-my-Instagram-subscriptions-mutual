@@ -19,13 +19,14 @@ export default {
     return chrome.storage.local.getBytesInUse();
   },
 
-  saveScanResult(nickname ,followed){
+  saveScanResult(user ,followed){
     return new Promise(async (resolve) => {
       let resultTosave = {
+        avatartUrl: user.avatarUrl,
         date: new Date().toISOString(),
         followed: LZString.compressToUTF16(JSON.stringify(followed))
       }
-      await this.set(nickname, resultTosave)
+      await this.set(user.nickname, resultTosave)
       resolve();
     });
   },
