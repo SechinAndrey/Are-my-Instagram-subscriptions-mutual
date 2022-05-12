@@ -1,4 +1,5 @@
-/* normalize css starts here */
+/* common */
+
 *,
 *::before,
 *::after {
@@ -10,8 +11,6 @@
 a{
   color: inherit;
 }
-/* normalize css ends here */
-
 
 html {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
@@ -22,9 +21,60 @@ body {
   background-color: white;
 }
 
-.instruction{
-  width: 470px;
+/* cards */
+
+.card{
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+.card-icon{
+  font-size: 24px;
+  margin: 10px 10px 0 0;
+}
+
+.card.card-warn{
+  border-color: #FFD12D;
+  background-color: #FFF4CF;
+}
+
+.card.card-regular{
+  border-color: #DBDBDB;
+  background-color: #FFFFFF;
+}
+
+/* btn */
+
+.btn{
+  user-select: none;
+  margin: 0;
+  font: inherit;
+  text-decoration: none;
+  appearance: none;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 9px;
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: inherit;
+  width: auto;
+  user-select: none;
+  border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid rgba(var(--ca6,219,219,219),1);
+  color: rgba(var(--f75,38,38,38),1);
+}
+
+/* popup */
 
 .popup-header{
   height: 67px;
@@ -45,40 +95,94 @@ body {
   padding: 20px;
 }
 
-.popup-body-intro > .notification{
+/* instruction */
+
+.instruction{
+  width: 470px;
+  display: block;
+}
+
+.scanned-results{
+  width: 470px;
+  display: none;
+}
+
+.popup-body-intro > .card{
   margin-bottom: 25px;
 }
 
-.popup-body-intro .notification:last-child{
+.popup-body-intro .card:last-child{
   margin-bottom: 10px;
 }
 
 .intro-img{
   width: 100%;
   margin-top: 10px;
+  image-rendering: -webkit-optimize-contrast;
 }
 
-.notification{
-  padding: 15px;
-  border-radius: 5px;
-  border: 1px solid black;
-  font-size: 16px;
+/* results */
+
+.all-space{
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.notification-icon{
-  font-size: 24px;
-  margin: 10px 10px 0 0;
+.all-space > .total-size{
+  color: #8E8E8E;
 }
 
-.notification.notification-warn{
-  border-color: #FFD12D;
-  background-color: #FFF4CF;
+ul.results{
+  margin: 15px 0 0 0;
+  padding: 0;
 }
 
-.notification.notification-regular{
-  border-color: #DBDBDB;
-  background-color: #FFFFFF;
+ul.results > li {
+  list-style-type: none;
+  margin-bottom: 15px;
+}
+
+.user-card{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-card-left-side {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.user-card-left-side-avatar{
+  width: 48px;
+  border-radius: 100%;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.user-card-left-side-info{
+  margin-left: 15px;
+}
+
+.user-card-left-side-info .nickname{
+  font-weight: 900;
+  margin-bottom: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 230px;
+}
+
+.user-card-left-side-info .detail{
+  display: flex;
+  flex-direction: row;
+  color: #8E8E8E;
+}
+
+.user-card-left-side-info .detail--{
+  margin: 0 10px;
 }

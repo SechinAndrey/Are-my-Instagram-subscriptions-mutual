@@ -59,11 +59,38 @@ function nTimesInterval(attempts, fn, ms = 500){
   return intervalId;
 }
 
+function formatDate(dateStr){
+  return new Date(dateStr).toLocaleString('ua-UA', {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).split(', ');
+}
+
 function ms2HMS(duration){
   let h = Math.floor(duration/(1000*60*60)),
       m = Math.floor(duration/(1000*60))%60,
       s = Math.floor(duration/1000)%60;
   return `${h != 0 ? h.toString().padStart(2, 0) + ':' : ''}${m.toString().padStart(2, 0)}:${s.toString().padStart(2, 0)}`;
+}
+
+function url2Base64Image(url) {
+  return new Promise(resolve => {
+    let img = new Image();
+    img.setAttribute('crossOrigin', 'anonymous');
+    img.onload = () => {
+      let canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+      let ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+      let dataURL = canvas.toDataURL("image/png");
+      resolve(dataURL);
+    }
+    img.src = url
+  });
 }
 
 export {
@@ -75,5 +102,7 @@ export {
   addStyleToHead,
   onLoad,
   nTimesInterval,
-  ms2HMS
+  ms2HMS,
+  formatDate,
+  url2Base64Image
 }

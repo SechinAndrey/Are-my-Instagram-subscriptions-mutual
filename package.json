@@ -18,6 +18,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "lz-string": "^1.4.4"
+    "lz-string": "^1.4.4",
+    "pretty-bytes": "^6.0.0"
   }
 }

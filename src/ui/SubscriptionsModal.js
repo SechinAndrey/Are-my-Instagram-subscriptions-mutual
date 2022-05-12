@@ -1,7 +1,7 @@
 import UiModal from './UiModal';
 import LZString from 'lz-string';
 import Storage from '../common/storage';
-import { onLoad } from '../common/helpers';
+import { onLoad, formatDate } from '../common/helpers';
 
 export default class SubscriptionsModal extends UiModal {
   constructor(){
@@ -34,6 +34,7 @@ export default class SubscriptionsModal extends UiModal {
     </div>
     `
     super("SubscriptionsModal", template, true);
+    this.followedListWrapEl = document.querySelector('#SubscriptionsModal .followed-list-wrap');
     this.followedListEl = document.querySelector('#SubscriptionsModal .followed-list');
     this.scannigDateEl = document.querySelector('#SubscriptionsModal .scannig-date');
     this.followedCountEl = document.querySelector('#SubscriptionsModal .ui-overlay-modal-header-count');
@@ -50,6 +51,11 @@ export default class SubscriptionsModal extends UiModal {
 
   clearItemsList(){
     this.followedListEl.innerHTML = "";
+  }
+
+  open(){
+    super.open();
+    this.followedListWrapEl.scrollTo(0, 0);
   }
   
   close(){
@@ -103,13 +109,7 @@ export default class SubscriptionsModal extends UiModal {
   }
 
   renderScanResult(result){
-    let [date, time] = new Date(result.date).toLocaleString('ua-UA', {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    }).split(', ');
+    let [date, time] = formatDate(result.date);
     let followed = JSON.parse(LZString.decompressFromUTF16(result.followed));
     let mutualCount = 0;
 

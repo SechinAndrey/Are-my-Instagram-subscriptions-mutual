@@ -7,24 +7,24 @@
 </head>
 <body>
   <div class="app">
+    <div class="popup-header">
+      <img src="icons/32.png" alt="">
+      <h1>Взаимны ли мои Instagram пододписки?</h1>
+    </div>
     <div class="instruction">
-      <div class="popup-header">
-        <img src="icons/32.png" alt="">
-        <h1>Взаимны ли мои Instagram пододписки?</h1>
-      </div>
       <div class="popup-body">
         <div class="popup-body-intro">
-          <div class="notification notification-warn">
-            <div class="notification-icon">☝️</div>
-            <div class="notification-text">
+          <div class="card card-warn">
+            <div class="card-icon">☝️</div>
+            <div class="card-text">
               Это расширение предназначено в первую очередь для сканирования <b>своего профиля 
               (тот провиль для которго выполнен вход в браузере)</b>. 
               Вы можете использовать его для сканирования другого профиля но возможны наточности из-за особенностей
               работы вэб версии Instagram.
             </div>
           </div>
-          <div class="notification notification-regular">
-            <div class="notification-text">
+          <div class="card card-regular">
+            <div class="card-text">
               <p>
                 Чтобы начать откройте страницу своего профиля в 
                 <a href="https://www.instagram.com/"><b>instagram</b></a> и нажмите кнопку сканирования
@@ -35,7 +35,18 @@
         </div>
       </div>
     </div>
-    <div class="scanned-reults"></div>
+    <div class="scanned-results">
+      <div class="popup-body">
+        <div class="card card-regular">
+          <div class="card-text all-space">
+            <div>Сохраненные результаты</div>                      
+            <div class="total-size"></div>                      
+          </div>
+        </div>
+        <ul class="results">
+        </ul>
+      </div>
+    </div>
   </div>
   <script src="popup.js"></script>
 </body>

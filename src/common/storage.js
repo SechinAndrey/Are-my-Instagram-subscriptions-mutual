@@ -15,14 +15,14 @@ export default {
     return chrome.storage.local.remove(keys);
   },
 
-  getBytesInUse(){
-    return chrome.storage.local.getBytesInUse();
+  getBytesInUse(keys){
+    return chrome.storage.local.getBytesInUse(keys);
   },
 
   saveScanResult(user ,followed){
     return new Promise(async (resolve) => {
       let resultTosave = {
-        avatartUrl: user.avatarUrl,
+        avatarUrl: user.avatarUrl,
         date: new Date().toISOString(),
         followed: LZString.compressToUTF16(JSON.stringify(followed))
       }

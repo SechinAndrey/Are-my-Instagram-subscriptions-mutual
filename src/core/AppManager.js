@@ -1,7 +1,7 @@
 import CheckMutualBtn from './CeckMutualBtn';
 import Modal from './Modal';
 import CheckMutualProcceror from './CheckMutualProcceror';
-import {sleep, scanFollowedCount, scanFollowersCount, onLoad, nTimesInterval} from '../common/helpers';
+import {sleep, scanFollowedCount, scanFollowersCount, onLoad, nTimesInterval, url2Base64Image} from '../common/helpers';
 import ProgressModal from '../ui/ProgressModal';
 import Storage from '../common/storage';
 import SubscriptionsModal from '../ui/SubscriptionsModal';
@@ -49,7 +49,9 @@ export default class AppManager{
 
     if(followedCount > 0 && followersCount > 0){
       let nickname = window.location.href.split('/').slice(-2, -1);
-      let avatarUrl = document.querySelector('#react-root > section > main > div > header > div > div > div > button > img').src;
+      let avatarEl = document.querySelector('#react-root > section > main > div > header > div > div > div > button > img') ||
+                     document.querySelector('#react-root > section > main > div > header > div > div > span > img');
+      let avatarUrl = await url2Base64Image(avatarEl.src);
       this.checkMutualProcceror.clear();
       await this.processFollowers();
       await sleep(500);
