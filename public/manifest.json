@@ -16,15 +16,8 @@
   },
   "permissions": [
     "storage",
-    "unlimitedStorage",
-    "tabs"
+    "unlimitedStorage"
   ],
-  "host_permissions": [
-    "https://www.instagram.com/*"
-  ],
-  "background": {
-    "service_worker": "service_worker.js"
-  },
   "content_scripts": [
     {
       "matches": [
