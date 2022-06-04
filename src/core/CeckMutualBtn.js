@@ -144,8 +144,8 @@ export default class CheckMutualBtn {
   }
 
   processActivitiesCovering(m){
-    let isActivitiesMutated = m.target.classList.toString().includes('_0ZPOP kIKUG') && 
-    m.addedNodes[0] && m.addedNodes[0].classList && m.addedNodes[0].classList.toString().includes('_8-yf5');
+    let isActivitiesMutated = m.target.classList.toString().includes('_acuj _aa8k') && 
+    m.addedNodes[0] && m.addedNodes[0].classList && m.addedNodes[0].classList.toString().includes('_ab6-');
 
     if(isActivitiesMutated){
       this.isActivitiesOpen = !this.isActivitiesOpen;   
@@ -154,9 +154,9 @@ export default class CheckMutualBtn {
   }
 
   processSearchDropdownCovering(m){
-    let isSearchDropdownMutated = m.target.classList.toString().includes('QY4Ed P0xOK') && 
-    m.addedNodes[0] && m.addedNodes[0].classList && m.addedNodes[0].classList.toString().includes('jLwSh') || 
-    m.removedNodes[0] && m.removedNodes[0].classList && m.removedNodes[0].classList.toString().includes('jLwSh');
+    let isSearchDropdownMutated = m.target.classList.toString().includes('_aawf _aawg') && 
+    m.addedNodes[0] && m.addedNodes[0].classList && m.addedNodes[0].classList.toString().includes('_aaw6') || 
+    m.removedNodes[0] && m.removedNodes[0].classList && m.removedNodes[0].classList.toString().includes('_aaw6');
 
     if(isSearchDropdownMutated){
       this.isSearchDropdonwOpen = !this.isSearchDropdonwOpen;   

@@ -1,24 +1,24 @@
 let followedSelectors = {
-  openBtn: '#react-root > section > main > div > header > section > ul > li:nth-child(3) > a',
-  closeBtn: 'body > div.RnEpo.Yx5HN > div > div > div > div:nth-child(1) > div > div.WaOAr._8E02J > div > button',
-  listWrap: 'body > div.RnEpo.Yx5HN > div > div > div > div.isgrP',
-  nickname: 'div > div.t2ksc > div.enpQJ > div.d7ByH > span > a > span',
-  name: 'div > div.t2ksc > div.enpQJ > div.wFPL8'
+  openBtn: 'li._aa_5:nth-child(3) > a:nth-child(1)',
+  closeBtn: '._ab9y > button:nth-child(1)',
+  listWrap: '._aano',
+  nickname: 'div:nth-child(1) > div:nth-child(1) span:nth-child(1) a:nth-child(1) span:nth-child(1)',
+  name: 'div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2)'
 };
-followedSelectors.loadingSelector = `${followedSelectors.listWrap} > ul > div > li.wo9IH.QN7kB`;
+followedSelectors.loadingSelector = `${followedSelectors.listWrap} ._aaei._aae_`;
 
 let followersSelectors = {
-  openBtn: '#react-root > section > main > div > header > section > ul > li:nth-child(2) > a',
-  closeBtn: 'body > div.RnEpo.Yx5HN > div > div > div > div:nth-child(1) > div > div.WaOAr._8E02J > div > button',
-  listWrap: 'body > div.RnEpo.Yx5HN > div > div > div > div.isgrP',
-  nickname: 'div > div.t2ksc > div.enpQJ > div.d7ByH > span > a > span',
-  name: 'div > div.t2ksc > div.enpQJ > div.wFPL8'
+  openBtn: 'li._aa_5:nth-child(2) > a:nth-child(1)',
+  closeBtn: '._ab9y > button:nth-child(1)',
+  listWrap: '._aano',
+  nickname: 'div:nth-child(1) > div:nth-child(1) span:nth-child(1) a:nth-child(1) span:nth-child(1)',
+  name: '._aacl'
 }
-followersSelectors.loadingSelector = `${followersSelectors.listWrap} > ul > div > li.wo9IH.QN7kB`;
+followersSelectors.loadingSelector = `${followersSelectors.listWrap} ._aaei._aae_`;
 
 let countSelectors = {
-  followedCountSelector: '#react-root > section > main > div > header > section > ul > li:nth-child(3) > a > div > span', 
-  followersCountSelector: '#react-root > section > main > div > header > section > ul > li:nth-child(2) > a > div > span'
+  followedCountSelector: 'li._aa_5:nth-child(3) > a:nth-child(1) > div:nth-child(1) > span:nth-child(1)', 
+  followersCountSelector: 'li._aa_5:nth-child(2) > a:nth-child(1) > div:nth-child(1) > span:nth-child(1)'
 };
 
 let modalsUserListSelectors = {
@@ -27,9 +27,21 @@ let modalsUserListSelectors = {
 }
 
 let checkMutualBtnSelectors = {
-  anchorSelector: '#react-root > section > main > div > header > section > ul > li:nth-child(3)',
+  anchorSelector: 'li._aa_5:nth-child(3) > a:nth-child(1) > div:nth-child(1)',
   followedOpenBtn: followedSelectors.openBtn,
   followersOpenBtn: followersSelectors.openBtn
 }
 
-export {followedSelectors, followersSelectors, countSelectors, modalsUserListSelectors, checkMutualBtnSelectors}
+let avatarSelectors = {
+  own: '._aadp',
+  other: '._aarf > span:nth-child(2) > img:nth-child(1)'
+}
+
+export {
+  followedSelectors,
+  followersSelectors,
+  countSelectors,
+  modalsUserListSelectors,
+  checkMutualBtnSelectors,
+  avatarSelectors
+}

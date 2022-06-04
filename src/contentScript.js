@@ -8,7 +8,7 @@ import { onLoad } from './common/helpers'
 
 let appManager = new AppManager();
 
-onLoad(() => { 
+onLoad(() => {
   document.querySelector('#CheckMutualBtn').addEventListener('CLICKED', () => {
     appManager.process();
   })

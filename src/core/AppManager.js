@@ -5,7 +5,7 @@ import {sleep, scanFollowedCount, scanFollowersCount, onLoad, nTimesInterval, ur
 import ProgressModal from '../ui/ProgressModal';
 import Storage from '../common/storage';
 import SubscriptionsModal from '../ui/SubscriptionsModal';
-import {followedSelectors, followersSelectors} from './selectors';
+import {followedSelectors, followersSelectors, avatarSelectors} from './selectors';
 
 export default class AppManager{
   constructor(){
@@ -49,8 +49,8 @@ export default class AppManager{
 
     if(followedCount > 0 && followersCount > 0){
       let nickname = window.location.href.split('/').slice(-2, -1);
-      let avatarEl = document.querySelector('#react-root > section > main > div > header > div > div > div > button > img') ||
-                     document.querySelector('#react-root > section > main > div > header > div > div > span > img');
+      let avatarEl = document.querySelector(avatarSelectors.own) ||
+                     document.querySelector(avatarSelectors.other);
       let avatarUrl = await url2Base64Image(avatarEl.src);
       this.checkMutualProcceror.clear();
       await this.processFollowers();
@@ -93,10 +93,11 @@ export default class AppManager{
 
   async processOpenUnfollowModal() {
     let {open_unfollow_modal: nickname} = await Storage.get('open_unfollow_modal');
-    let openFollowModalBtnSelector = '#react-root > section > main > div > header > section > div.XBGH5 > div.qF0y9.Igw0E.IwRSH.eGOV_.ybXk5._4EzTm.bPdm3 > div > div.qF0y9.Igw0E.IwRSH.eGOV_.acqo5._4EzTm.soMvl > div > span > span.vBF20._1OSdk > button';
-    let openFollowModalBtnEl = document.querySelector(openFollowModalBtnSelector);
-    
+
     if(nickname && location.href.includes(nickname)){
+      let openFollowModalBtnSelector = '._abni';
+      let openFollowModalBtnEl = document.querySelector(openFollowModalBtnSelector);
+
       let intervalId = nTimesInterval(50, () => {
         if(openFollowModalBtnEl){
           openFollowModalBtnEl.click();
@@ -110,10 +111,16 @@ export default class AppManager{
 
   async processRescan(){
     let {rescan} = await Storage.get('rescan');
+
     if(rescan){
-      await this.scan();
-      this.displayScanResult(await this.getCurentUserFromStorage());
-      Storage.remove('rescan');
+      let waitProfilePageIntervalId = nTimesInterval(50, async () => {
+        if(document.querySelector(followersSelectors.openBtn)){
+          clearInterval(waitProfilePageIntervalId);
+            await this.scan();
+            this.displayScanResult(await this.getCurentUserFromStorage());
+            Storage.remove('rescan');
+        }
+      });
     }
   }
 }

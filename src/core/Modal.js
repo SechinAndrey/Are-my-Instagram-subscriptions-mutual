@@ -97,8 +97,12 @@ export default class Modal{
 
   addSilentModalStyle(){
     let css = `
-      .RnEpo.Yx5HN {
-        right: 999999px;
+      .ms7hmo2b{
+        display: none;
+      }
+
+      .iqfcb0g7{
+        right: 999999999px;
       }
     `;
     addStyleToHead(css, 'amism-modal');

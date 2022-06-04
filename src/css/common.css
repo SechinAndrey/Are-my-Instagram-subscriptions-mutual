@@ -49,6 +49,7 @@
 }
 
 .ui-overlay-modal-header{
+  position: relative;
   height: 42px;
   display: flex;
   flex-direction: row;
